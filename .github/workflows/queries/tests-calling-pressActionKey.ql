@@ -15,7 +15,7 @@ predicate callsPressActionKey(Function test) {
     it.getCalleeName() = "it" and
     it.getParent*() = describe and
     test = it.getArgument(1) and
-    describe.getParent*().getName() = "pressActionKey"
+    it.getName() = "pressActionKey"
   )
 }
 
