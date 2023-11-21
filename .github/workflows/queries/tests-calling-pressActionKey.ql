@@ -9,16 +9,15 @@ import javascript
 /**
  * Holds if a function is a test that calls the function "pressActionKey".
  */
-predicate callsPressActionKey(Function test) {
-  exists(CallExpr describe, CallExpr it |
-    describe.getCalleeName() = "describe" and
-    it.getCalleeName() = "it" and
-    it.getParent*() = describe and
-    test = it.getArgument(1) and
-    it.getName() = "pressActionKey"
+
+predicate callsPressActionKey(Function caller, Function callee) {
+  exists(DataFlow::CallNode call |
+    call.getEnclosingFunction() = caller and
+    call.getACallee() = callee and
+    callee.getName() = "pressActionKey"
   )
 }
 
-from Function test
-where callsPressActionKey(function)
-select test, "calls pressActionKey"
+from Function caller, Function callee
+where callsPressActionKey(caller, callee)
+select caller, "calls pressActionKey"
